@@ -1,4 +1,4 @@
-# Tweemba
+# Twimba
 
 A Twitter clone built with vanilla JavaScript.
 
