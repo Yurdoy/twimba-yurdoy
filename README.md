@@ -1,25 +1,48 @@
-# Twimba
+# 🐦 Twimba
 
-A Twitter clone built with vanilla JavaScript.
+A Twitter-style feed built with vanilla JavaScript — featuring
+infinitely nested replies powered by recursion.
 
-🔗 Live: (link coming after deploy)
+**🔗 Live demo:** https://twimba-yurdoy.netlify.app
 
-## Features
+![Twimba demo](demo.gif)
 
-- Post tweets, like, retweet, delete
-- Nested replies at any depth (recursive rendering and search)
-- Expand/collapse state stored in data, survives re-renders
-- Persistence with localStorage
+## 🌟 Highlights
 
-## Tech
+- 💬 Reply to replies at **any depth** — one recursive render function, one template
+- ❤️ Like and retweet on every level, found by a recursive search
+- 📂 Expand/collapse state lives in the data, so it survives every re-render
+- 💾 Your feed persists in `localStorage`
+- 🧱 No frameworks, no build step — plain HTML, CSS and ES modules
 
-HTML, CSS, JavaScript (ES modules)
+## ℹ️ Overview
 
-## Run locally
+Twimba started as a guided project in the
+[Scrimba Fullstack Developer Path](https://scrimba.com/fullstack-path-c0fullstack).
+The base feed (tweets, likes, retweets, single-level replies) comes from the course.
 
-Open the project with a local server (e.g. VS Code Live Server).
+**What I added on my own:**
 
-## Credits
+- Nested replies at unlimited depth (`getRepliesHtml` calls itself for `reply.replies`)
+- A recursive `findByUuid` that finds any tweet or reply in the tree
+- UI state (open/closed replies) moved from the DOM into the data model
 
-Based on a project from the [Scrimba Fullstack Developer Path](https://scrimba.com/fullstack-path-c0fullstack).
-Nested replies, recursive functions and UI state handling were added by me.
+## 🧠 What I learned
+
+- **Recursion** — process an item, call the same function on its children,
+  stop at an empty array (the base case)
+- **Refactoring safely** — extract a function first, verify nothing changed, then add features
+- **State belongs in data, not in HTML** — `render()` rebuilds the DOM,
+  so anything stored only in the DOM is lost
+- **Reading errors** — `null` vs `undefined` vs `ReferenceError`, and checking the
+  Elements panel to see which class actually reached the HTML
+
+## 🚀 Run locally
+
+ES modules don't load from `file://`, so serve the folder with any local server,
+e.g. the VS Code **Live Server** extension, and open `index.html`.
+
+## ✍️ Author
+
+**Yuriy Doychev** — career changer from the maritime industry into web development.
+[GitHub](https://github.com/Yurdoy)
