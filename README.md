@@ -29,13 +29,25 @@ The base feed (tweets, likes, retweets, single-level replies) comes from the cou
 
 ## 🧠 What I learned
 
-- **Recursion** — process an item, call the same function on its children,
-  stop at an empty array (the base case)
-- **Refactoring safely** — extract a function first, verify nothing changed, then add features
-- **State belongs in data, not in HTML** — `render()` rebuilds the DOM,
-  so anything stored only in the DOM is lost
-- **Reading errors** — `null` vs `undefined` vs `ReferenceError`, and checking the
-  Elements panel to see which class actually reached the HTML
+- **Recursion** — a function that calls itself. `getRepliesHtml` renders a list of
+  replies and, inside each reply's template, calls itself again for that reply's
+  own replies. It stops when the replies array is empty.
+  - **Refactoring safely** — changing how code is structured without changing what
+    it does. I first extracted the reply rendering into its own function and checked
+    the page looked exactly the same; only then did I add nested replies.
+- **Refactoring as preparation** — restructuring code without changing its behavior,
+  to make the next change easy. I first extracted reply rendering into its own
+  function and verified nothing changed; that made adding nested replies a small,
+  safe step.
+- **State belongs in data, not in HTML** — toggling the `hidden` class directly in
+  the DOM was lost on every `render()`, because the page is rebuilt from templates.
+  I moved the open/closed state into the data (`isShown`), and the template derives
+  the class from it — the same pattern as `isLiked`.
+- **Reading errors** — `TypeError: Cannot read properties of null/undefined` means
+  something upstream returned nothing (`getElementById` found no element,
+  `findByUuid` found no object, a function had no `return`); `ReferenceError`
+  means a variable doesn't exist in that scope. I read the type, the message and
+  the line — then trace back to where the empty value came from.
 
 ## 🚀 Run locally
 
