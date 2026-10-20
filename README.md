@@ -31,10 +31,8 @@ The base feed (tweets, likes, retweets, single-level replies) comes from the cou
 
 - **Recursion** — a function that calls itself. `getRepliesHtml` renders a list of
   replies and, inside each reply's template, calls itself again for that reply's
-  own replies. It stops when the replies array is empty.
-  - **Refactoring safely** — changing how code is structured without changing what
-    it does. I first extracted the reply rendering into its own function and checked
-    the page looked exactly the same; only then did I add nested replies.
+  own replies. It stops when the replies array is empty (the base case).
+  The same idea powers `findByUuid`.
 - **Refactoring as preparation** — restructuring code without changing its behavior,
   to make the next change easy. I first extracted reply rendering into its own
   function and verified nothing changed; that made adding nested replies a small,
