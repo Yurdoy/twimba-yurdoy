@@ -58,18 +58,7 @@ function handleTweetBtnClick() {
   const tweetInput = document.getElementById("tweet-input");
 
   if (tweetInput.value) {
-    tweets.unshift({
-      handle: `@Scrimba`,
-      profilePic: `images/scrimbalogo.png`,
-      likes: 0,
-      retweets: 0,
-      tweetText: tweetInput.value,
-      replies: [],
-      isLiked: false,
-      isRetweeted: false,
-      isShown: false,
-      uuid: uuidv4(),
-    });
+    tweets.unshift(createPost(tweetInput.value));
     render();
     tweetInput.value = "";
   }
@@ -81,21 +70,25 @@ function handleTweetReplyBtnClick(tweetId) {
   const targetTweetObj = findByUuid(tweets, tweetId);
 
   if (tweetReplyInput.value) {
-    targetTweetObj.replies.unshift({
-      handle: `@Scrimba`,
-      profilePic: `images/scrimbalogo.png`,
-      likes: 0,
-      retweets: 0,
-      tweetText: tweetReplyInput.value,
-      replies: [],
-      isLiked: false,
-      isRetweeted: false,
-      isShown: false,
-      uuid: uuidv4(),
-    });
+    targetTweetObj.replies.unshift(createPost(tweetReplyInput.value));
     render();
     tweetReplyInput.value = "";
   }
+}
+
+function createPost(tweetText) {
+  return {
+    handle: `@Scrimba`,
+    profilePic: `images/scrimbalogo.png`,
+    likes: 0,
+    retweets: 0,
+    tweetText,
+    replies: [],
+    isLiked: false,
+    isRetweeted: false,
+    isShown: false,
+    uuid: uuidv4(),
+  };
 }
 
 function handleDeleteBtnClick(tweetId) {
@@ -174,7 +167,7 @@ function getRepliesHtml(replies) {
 }
 
 function getFeedHtml() {
-  let feedHtml = ``;
+  let feedHtml = "";
 
   tweets.forEach(function (tweet) {
     const likeIconClass = tweet.isLiked ? "liked" : "";
