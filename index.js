@@ -126,27 +126,12 @@ function findByUuid(array, uuid) {
 function getRepliesHtml(replies) {
   let repliesHtml = "";
 
-  if (replies.length > 0) {
-    replies.forEach(function (reply) {
-      let replyLikeClass = "";
+  replies.forEach(function (reply) {
+    const replyLikeClass = reply.isLiked ? "liked" : "";
+    const replyRetweetClass = reply.isRetweeted ? "retweeted" : "";
+    const replyHiddenClass = reply.isShown ? "" : "hidden";
 
-      if (reply.isLiked) {
-        replyLikeClass = "liked";
-      }
-
-      let replyRetweetClass = "";
-
-      if (reply.isRetweeted) {
-        replyRetweetClass = "retweeted";
-      }
-
-      let replyShownClass = "";
-
-      if (!reply.isShown) {
-        replyShownClass = "hidden";
-      }
-
-      repliesHtml += `
+    repliesHtml += `
 <div class="tweet-reply">
     <div class="tweet-inner">
         <img src="${reply.profilePic}" class="profile-pic">
@@ -175,7 +160,7 @@ function getRepliesHtml(replies) {
             </div>
         </div>
     </div>
-    <div class="${replyShownClass}" id="replies-${reply.uuid}">
+    <div class="${replyHiddenClass}" id="replies-${reply.uuid}">
       ${getRepliesHtml(reply.replies)}
         <div>
             <textarea placeholder="Write your reply" id="reply-input-${reply.uuid}" class="tweet-details-details"></textarea>
@@ -184,8 +169,7 @@ function getRepliesHtml(replies) {
     </div>
 </div>
 `;
-    });
-  }
+  });
   return repliesHtml;
 }
 
@@ -193,23 +177,9 @@ function getFeedHtml() {
   let feedHtml = ``;
 
   tweets.forEach(function (tweet) {
-    let likeIconClass = "";
-
-    if (tweet.isLiked) {
-      likeIconClass = "liked";
-    }
-
-    let retweetIconClass = "";
-
-    if (tweet.isRetweeted) {
-      retweetIconClass = "retweeted";
-    }
-
-    let replyShownClass = "";
-
-    if (!tweet.isShown) {
-      replyShownClass = "hidden";
-    }
+    const likeIconClass = tweet.isLiked ? "liked" : "";
+    const retweetIconClass = tweet.isRetweeted ? "retweeted" : "";
+    const replyHiddenClass = tweet.isShown ? "" : "hidden";
 
     feedHtml += `
 <div class="tweet">
@@ -243,7 +213,7 @@ function getFeedHtml() {
             </div>   
         </div>            
     </div>
-    <div class="${replyShownClass}" id="replies-${tweet.uuid}">
+    <div class="${replyHiddenClass}" id="replies-${tweet.uuid}">
         ${getRepliesHtml(tweet.replies)}
         <div>
             <textarea placeholder="Write your reply" id="reply-input-${tweet.uuid}" class="tweet-details-details"></textarea>
