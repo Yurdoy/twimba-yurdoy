@@ -116,6 +116,15 @@ function findByUuid(array, uuid) {
   return found;
 }
 
+function escapeHtml(text) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 function getRepliesHtml(replies) {
   let repliesHtml = "";
 
@@ -129,8 +138,8 @@ function getRepliesHtml(replies) {
     <div class="tweet-inner">
         <img src="${reply.profilePic}" class="profile-pic">
         <div>
-            <p class="handle">${reply.handle}</p>
-            <p class="tweet-text">${reply.tweetText}</p>
+            <p class="handle">${escapeHtml(reply.handle)}</p>
+            <p class="tweet-text">${escapeHtml(reply.tweetText)}</p>
             <div class="tweet-details">
                 <span class="tweet-detail">
                     <i class="fa-regular fa-comment-dots"
@@ -179,8 +188,8 @@ function getFeedHtml() {
     <div class="tweet-inner">
         <img src="${tweet.profilePic}" class="profile-pic">
         <div>
-            <p class="handle">${tweet.handle}</p>
-            <p class="tweet-text">${tweet.tweetText}</p>
+            <p class="handle">${escapeHtml(tweet.handle)}</p>
+            <p class="tweet-text">${escapeHtml(tweet.tweetText)}</p>
             <div class="tweet-details">
                 <span class="tweet-detail">
                     <i class="fa-regular fa-comment-dots"

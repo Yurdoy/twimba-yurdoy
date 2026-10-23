@@ -14,6 +14,7 @@ infinitely nested replies powered by recursion.
 - 📂 Expand/collapse state lives in the data, so it survives every re-render
 - 💾 Your feed persists in `localStorage`
 - 🧱 No frameworks, no build step — plain HTML, CSS and ES modules
+- 🛡️ User text is HTML-escaped before rendering to prevent XSS
 
 ## ℹ️ Overview
 
@@ -46,6 +47,10 @@ The base feed (tweets, likes, retweets, single-level replies) comes from the cou
   `findByUuid` found no object, a function had no `return`); `ReferenceError`
   means a variable doesn't exist in that scope. I read the type, the message and
   the line — then trace back to where the empty value came from.
+- **Preventing XSS** — inserting user text with `innerHTML` lets it run as HTML
+  in other users' browsers. I escape `& < > " '` at render time with `escapeHtml`,
+  so the browser shows them as text. `&` goes first, otherwise it would break
+  the entities created by the other replacements.
 
 ## 🚀 Run locally
 
